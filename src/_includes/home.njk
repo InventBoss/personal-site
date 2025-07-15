@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Home / {{ title }}</title>
+	<link rel="stylesheet" href="/bundle.css">
+	<link rel="icon" href="/favicon.ico">
+</head>
+
+<body>
+	<div id="banner">
+		<a href="/" alt="Link to Home">
+			<span class="primary-highlightable">░░░░░░░░</span><br>
+			<span class="primary-highlightable">░░░░░░</span>╔═╣<span class="primary-highlightable">░</span>╔═╗<span
+				class="primary-highlightable">░░░░</span><br>
+			<span class="primary-highlightable">&ensp;&ensp;&ensp;&ensp;░░░</span>═╗<span
+				class="primary-highlightable">░</span>ỏ<span class="primary-highlightable">░░░░</span>╠╝<span
+				class="primary-highlightable">░░░░</span>ỏ<span class="primary-highlightable">░</span>╔<span
+				class="primary-highlightable">░░░░░</span><br>
+			<span class="primary-highlightable">░░░░</span>╚<span class="primary-highlightable">░</span>ỏ<span
+				class="primary-highlightable">░░</span>╠═╦╗ỏ<span class="primary-highlightable">░</span>║<span
+				class="primary-highlightable">░░</span>╔═╩═╣<span class="primary-highlightable">░</span>ỏ<span
+				class="primary-highlightable">░░</span>╦═<span class="primary-highlightable">░&ensp;</span><br>
+			<span class="primary-highlightable">&ensp;&ensp;&ensp;&ensp;░</span>ỏ<span
+				class="primary-highlightable">░░</span>╚═╩╦╝<span class="primary-highlightable">░░</span>╚═╦█▓═╝<span
+				class="primary-highlightable">░</span>ỏ<span class="primary-highlightable">░</span>╚═╦═╝<span
+				class="primary-highlightable">░</span>ỏ<span class="primary-highlightable">░░░</span><br>
+			<span class="primary-highlightable">&ensp;&ensp;&ensp;&ensp;&ensp;░░</span>ỏ<span class="primary-highlightable">░░░░</span>ỏ<span
+				class="primary-highlightable">░</span>&ensp; █▓ &ensp;&ensp;&ensp;&ensp;<span class="primary-highlightable">░░</span>ỏ<span
+				class="primary-highlightable">░░░░░&ensp;</span><br>
+			&ensp;&ensp;&ensp;&ensp;&ensp;▓██ <span class="primary-highlightable">░░</span><br>
+			&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;█▓██═╩<span class="primary-highlightable">░░</span><br>
+			&ensp;&ensp;██▓█<br>
+			<span class="primary-highlightable">⚘ </span>█▓█████&ensp;&ensp;<br>
+			&ensp;&ensp;&ensp;▓█████▓███ <span class="primary-highlightable">⚘ </span><br>
+		</a>
+	</div>
+	<div id="content">
+		<header>
+			<h1>Home / {{ title }}</h1>
+		</header>
+		<main>
+			{{ content | safe }}
+			<h3>My Blog</h3>
+			{%- for post in collections.post -%}
+			<a href="{{ post.url }}">{{ post.data.title }}</a><span class="date-text"> • {{ post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}</span></li>
+			{%- endfor -%}
+			<br><br>
+			<h3>Contact Me</h3>
+			<a href="https://x.com/Invent_Boss">Twitter</a> •
+			<a href="https://github.com/InventBoss">Github</a>
+		</main>
+	</div>
+</body>
+
+</html>

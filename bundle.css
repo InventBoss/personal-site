@@ -1,0 +1,139 @@
+:root {
+    --background: rgb(16, 15, 15);
+    --text-primary: rgb(206, 205, 195);
+    --text-secondary: rgb(58, 169, 159);
+    --text-tertiary: rgb(87, 86, 83);
+    --red: rgb(209, 77, 65);
+    --red-dark: rgb(175, 48, 41);
+    --orange: rgb(218, 112, 44);
+    --orange-dark: rgb(188, 82, 21);
+    --yellow: rgb(208, 162, 21);
+    --yellow-dark: rgb(173, 131, 1);
+    --green: rgb(135, 154, 57);
+    --green-dark: rgb(102, 128, 11);
+    --cyan: rgb(58, 169, 159);
+    --cyan-dark: rgb(36, 131, 123);
+    --blue: rgb(67, 133, 190);
+    --blue-dark: rgb(32, 94, 166);
+    --purple: rgb(139, 126, 200);
+    --purple-dark: rgb(94, 64, 157);
+    --magenta: rgb(206, 93, 151);
+    --magenta-dark: rgb(160, 47, 111);
+}
+
+@font-face {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("InterVariable.woff2");
+}
+
+@font-face {
+    font-family: Inter;
+    font-style: italic;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("InterVariable-Italic.woff2");
+}
+
+@font-face {
+    font-family: SpaceMono;
+    src: url("SpaceMono-Regular.ttf");
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text-primary);
+
+    font-family: Inter;
+    line-height: 1.5;
+}
+
+#banner {
+    color: var(--red-dark);
+    font-family: SpaceMono;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    height: fit-content;
+    align-self: center;
+
+    font-size: calc(0.7rem + 0.7vw);
+    text-align: center;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+#content {
+    margin-left: auto;
+    margin-right: auto;
+
+    font-size: calc(0.8rem + 0.3vw);
+    max-width: 33em;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+a,
+a:active {
+    color: inherit;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: var(--cyan);
+}
+
+#banner a,
+#banner a:hover,
+#banner a:visited,
+#banner a:active {
+    color: inherit;
+    text-decoration: none;
+}
+
+.primary-highlightable {
+    color: var(--green);
+}
+
+h1 {
+    color: var(--text-secondary);
+}
+
+h4 {
+    color: var(--text-tertiary);
+}
+
+footer {
+    color: var(--text-tertiary);
+}
+
+code {
+    font-family: SpaceMono;
+}
+
+#banner a:hover .primary-highlightable {
+    color: var(--red-dark);
+}
+
+#banner a:hover {
+    color: var(--green);
+}
+
+.date-text {
+    color: var(--text-tertiary);
+
+    text-decoration: none;
+}
+
+.blog {
+    padding-bottom: 10em;
+}
+
+hr {
+    /* Makes the space between hr bigger */
+    font-size: 4em;
+    color: var(--text-tertiary);
+}
