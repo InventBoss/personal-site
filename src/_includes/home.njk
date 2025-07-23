@@ -47,7 +47,7 @@
 			{%- for post in collections.post | sort(attribute='date') | reverse -%}
 			<a href="{{ post.url }}">{{ post.data.title }}</a><span class="date-text"> • {{ post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}</span><br>
 			{%- endfor -%}
-			<br><br>
+			<br>
 			<h3>Contact Me</h3>
 			<a href="https://x.com/Invent_Boss">Twitter</a> •
 			<a href="https://github.com/InventBoss">Github</a>
