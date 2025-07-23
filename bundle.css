@@ -42,6 +42,11 @@
     src: url("SpaceMono-Regular.ttf");
 }
 
+::selection {
+    background: var(--blue); /* Highlight color */
+    color: var(--text-primary); /* Text color */
+}
+
 body {
     background-color: var(--background);
     color: var(--text-primary);
@@ -112,6 +117,12 @@ footer {
 
 code {
     font-family: SpaceMono;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #banner a:hover .primary-highlightable {

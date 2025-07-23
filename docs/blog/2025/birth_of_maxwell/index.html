@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Blog / Importing 3D Models</title>
+	<link rel="stylesheet" href="/flexoki_prism.css">
+	<link rel="stylesheet" href="/bundle.css">
+	<link rel="icon" href="/favicon.ico">
+</head>
+
+<body>
+	<div id="banner">
+		<a href="/" alt="Link to Home">
+			<span class="primary-highlightable">░░░░░░░░</span><br>
+			<span class="primary-highlightable">░░░░░░</span>╔═╣<span class="primary-highlightable">░</span>╔═╗<span
+				class="primary-highlightable">░░░░</span><br>
+			<span class="primary-highlightable">&ensp;&ensp;&ensp;&ensp;░░░</span>═╗<span
+				class="primary-highlightable">░</span>ỏ<span class="primary-highlightable">░░░░</span>╠╝<span
+				class="primary-highlightable">░░░░</span>ỏ<span class="primary-highlightable">░</span>╔<span
+				class="primary-highlightable">░░░░░</span><br>
+			<span class="primary-highlightable">░░░░</span>╚<span class="primary-highlightable">░</span>ỏ<span
+				class="primary-highlightable">░░</span>╠═╦╗ỏ<span class="primary-highlightable">░</span>║<span
+				class="primary-highlightable">░░</span>╔═╩═╣<span class="primary-highlightable">░</span>ỏ<span
+				class="primary-highlightable">░░</span>╦═<span class="primary-highlightable">░&ensp;</span><br>
+			<span class="primary-highlightable">&ensp;&ensp;&ensp;&ensp;░</span>ỏ<span
+				class="primary-highlightable">░░</span>╚═╩╦╝<span class="primary-highlightable">░░</span>╚═╦█▓═╝<span
+				class="primary-highlightable">░</span>ỏ<span class="primary-highlightable">░</span>╚═╦═╝<span
+				class="primary-highlightable">░</span>ỏ<span class="primary-highlightable">░░░</span><br>
+			<span class="primary-highlightable">&ensp;&ensp;&ensp;&ensp;&ensp;░░</span>ỏ<span class="primary-highlightable">░░░░</span>ỏ<span
+				class="primary-highlightable">░</span>&ensp; █▓ &ensp;&ensp;&ensp;&ensp;<span class="primary-highlightable">░░</span>ỏ<span
+				class="primary-highlightable">░░░░░&ensp;</span><br>
+			&ensp;&ensp;&ensp;&ensp;&ensp;▓██ <span class="primary-highlightable">░░</span><br>
+			&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;█▓██═╩<span class="primary-highlightable">░░</span><br>
+			&ensp;&ensp;██▓█<br>
+			<span class="primary-highlightable">⚘ </span>█▓█████&ensp;&ensp;<br>
+			&ensp;&ensp;&ensp;▓█████▓███ <span class="primary-highlightable">⚘ </span><br>
+		</a>
+	</div>
+	<div id="content" class="blog">
+		<header>
+			<h1>Blog / Importing 3D Models</h1>
+			<h4>July 23, 2025 • 2 minute read</h4>
+		</header>
+		<main>
+			<p>I've been busy with my job, but I haven't been idle with game dev. With a little bit of doc referencing/stealing, I now present <em><a href="https://www.youtube.com/watch?v=YRvOePz2OqQ">Spinning Maxwell</a></em>:</p>
+<p><img src="/assets/maxwell_spin_2025_7_23.gif" alt="Maxwell spinning like the goober he is"></p>
+<p>Suprisingly difficult considering I tried 2 model formats before <code>.gltf</code> finally did the trick (also took embarrasingly long to figure out how to type the path, but I got it eventually).</p>
+<pre class="language-odin"><code class="language-odin">maxwell_model <span class="token punctuation">:</span><span class="token operator">=</span> rl<span class="token punctuation">.</span><span class="token procedure-name function">LoadModel</span><span class="token punctuation">(</span><span class="token string">"./src/assets/source/maxwell.gltf"</span><span class="token punctuation">)</span></code></pre>
+<p>Another strange problem is that when you draw the model, you can specify a transform (effectively its location), but you can't specify rotations along multiple axes.</p>
+<pre class="language-odin"><code class="language-odin">rl<span class="token punctuation">.</span><span class="token procedure-name function">DrawModel</span><span class="token punctuation">(</span>
+    maxwell_model<span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>maxwell_pos<span class="token punctuation">.</span>x<span class="token punctuation">,</span> maxwell_pos<span class="token punctuation">.</span>y<span class="token punctuation">,</span> maxwell_pos<span class="token punctuation">.</span>z<span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token comment">// Scale</span>
+    rl<span class="token punctuation">.</span>WHITE <span class="token comment">// Tint (Just set it white and the texture looks fine)</span>
+<span class="token punctuation">)</span></code></pre>
+<p>To solve this, you have to specify the rotation not in the draw function, but in the model's rotation. This seems weird to me, as reusing that model for multiple entities would give them all the same rotation—unless you change the model rotation right before drawing each entity. But alas, this is the solution I came to:</p>
+<pre class="language-odin"><code class="language-odin">t <span class="token punctuation">:</span><span class="token operator">=</span> <span class="token procedure-name function">f32</span><span class="token punctuation">(</span>rl<span class="token punctuation">.</span><span class="token procedure-name function">GetTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+rot <span class="token punctuation">:</span><span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span>f32 <span class="token punctuation">{</span>
+	la<span class="token punctuation">.</span><span class="token procedure-name function">tan</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">*</span> la<span class="token punctuation">.</span><span class="token procedure-name function">sin</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">1</span><span class="token punctuation">,</span>
+	la<span class="token punctuation">.</span><span class="token procedure-name function">tan</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">*</span> la<span class="token punctuation">.</span><span class="token procedure-name function">sin</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">1</span><span class="token punctuation">,</span>
+	la<span class="token punctuation">.</span><span class="token procedure-name function">tan</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">*</span> la<span class="token punctuation">.</span><span class="token procedure-name function">sin</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">1</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span> <span class="token comment">// Used this rotation because it's very "visual"</span>
+
+translation <span class="token punctuation">:</span><span class="token operator">=</span> rl<span class="token punctuation">.</span><span class="token procedure-name function">MatrixTranslate</span><span class="token punctuation">(</span>
+    maxwell_pos<span class="token punctuation">.</span>x<span class="token punctuation">,</span>
+    maxwell_pos<span class="token punctuation">.</span>y<span class="token punctuation">,</span>
+    maxwell_pos<span class="token punctuation">.</span>z
+<span class="token punctuation">)</span>
+rotation <span class="token punctuation">:</span><span class="token operator">=</span> rl<span class="token punctuation">.</span><span class="token procedure-name function">MatrixRotateXYZ</span><span class="token punctuation">(</span><span class="token punctuation">{</span>rot<span class="token punctuation">.</span>x<span class="token punctuation">,</span> rot<span class="token punctuation">.</span>y<span class="token punctuation">,</span> rot<span class="token punctuation">.</span>z<span class="token punctuation">}</span><span class="token punctuation">)</span>
+scale <span class="token punctuation">:</span><span class="token operator">=</span> rl<span class="token punctuation">.</span><span class="token procedure-name function">MatrixScale</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+maxwell_model<span class="token punctuation">.</span>transform <span class="token operator">=</span> translation <span class="token operator">*</span> rotation <span class="token operator">*</span> scale
+
+rl<span class="token punctuation">.</span><span class="token procedure-name function">DrawModel</span><span class="token punctuation">(</span>
+    maxwell_model<span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>maxwell_pos<span class="token punctuation">.</span>x<span class="token punctuation">,</span> maxwell_pos<span class="token punctuation">.</span>y<span class="token punctuation">,</span> maxwell_pos<span class="token punctuation">.</span>z<span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token comment">// Scale</span>
+    rl<span class="token punctuation">.</span>WHITE <span class="token comment">// Tint (Just set it white and the texture looks fine)</span>
+<span class="token punctuation">)</span></code></pre>
+<p>Despite some weirdness, Odin+Raylib has been treating me well. Its simple but functional nature has been a joy to program in, and I'm mostly just chugging along, learning new skills (like 3D models), and steadily learning game dev.</p>
+<p>As for releasing this code on Github, I'm going to wait until I begin to work on the game, as right now I'm mostly exploring different aspects of Raylib, but don't worry! Any game that I'm currently making will be open source, since this project is for fun, not money.</p>
+<p>Anyway, thanks for reading. This blog has been a shorter one, but I hope you enjoyed it, and here is the code I used to rebirth Maxwell into Odin+Raylib:</p>
+<pre class="language-odin"><code class="language-odin"><span class="token keyword">package</span> game
+
+<span class="token keyword">import</span> la <span class="token string">"core:math/linalg"</span>
+<span class="token keyword">import</span> rl <span class="token string">"vendor:raylib"</span>
+
+<span class="token procedure-definition function">main</span> <span class="token punctuation">:</span><span class="token punctuation">:</span> <span class="token keyword">proc</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	rl<span class="token punctuation">.</span><span class="token procedure-name function">SetConfigFlags</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">.</span>WINDOW_RESIZABLE<span class="token punctuation">,</span> <span class="token punctuation">.</span>WINDOW_TRANSPARENT<span class="token punctuation">}</span><span class="token punctuation">)</span>
+	rl<span class="token punctuation">.</span><span class="token procedure-name function">InitWindow</span><span class="token punctuation">(</span><span class="token number">1280</span><span class="token punctuation">,</span> <span class="token number">720</span><span class="token punctuation">,</span> <span class="token string">"My Odin + Raylib game"</span><span class="token punctuation">)</span>
+	maxwell_model <span class="token punctuation">:</span><span class="token operator">=</span> rl<span class="token punctuation">.</span><span class="token procedure-name function">LoadModel</span><span class="token punctuation">(</span><span class="token string">"./src/assets/source/maxwell.gltf"</span><span class="token punctuation">)</span>
+
+	maxwell_pos<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span>f32 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">10.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">}</span>
+
+	<span class="token keyword">for</span> <span class="token operator">!</span>rl<span class="token punctuation">.</span><span class="token procedure-name function">WindowShouldClose</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		input<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span>f32
+
+		<span class="token keyword">if</span> rl<span class="token punctuation">.</span><span class="token procedure-name function">IsKeyDown</span><span class="token punctuation">(</span><span class="token punctuation">.</span>UP<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			input<span class="token punctuation">.</span>z <span class="token operator">+=</span> <span class="token number">1</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">if</span> rl<span class="token punctuation">.</span><span class="token procedure-name function">IsKeyDown</span><span class="token punctuation">(</span><span class="token punctuation">.</span>DOWN<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			input<span class="token punctuation">.</span>z <span class="token operator">-=</span> <span class="token number">1</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">if</span> rl<span class="token punctuation">.</span><span class="token procedure-name function">IsKeyDown</span><span class="token punctuation">(</span><span class="token punctuation">.</span>LEFT<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			input<span class="token punctuation">.</span>x <span class="token operator">-=</span> <span class="token number">1</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">if</span> rl<span class="token punctuation">.</span><span class="token procedure-name function">IsKeyDown</span><span class="token punctuation">(</span><span class="token punctuation">.</span>RIGHT<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			input<span class="token punctuation">.</span>x <span class="token operator">+=</span> <span class="token number">1</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">if</span> rl<span class="token punctuation">.</span><span class="token procedure-name function">IsKeyPressed</span><span class="token punctuation">(</span><span class="token punctuation">.</span>SPACE<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			rl<span class="token punctuation">.</span><span class="token procedure-name function">ToggleFullscreen</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		<span class="token punctuation">}</span>
+
+		maxwell_pos <span class="token operator">+=</span> la<span class="token punctuation">.</span><span class="token procedure-name function">normalize0</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">5</span> <span class="token operator">*</span> rl<span class="token punctuation">.</span><span class="token procedure-name function">GetFrameTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+		rl<span class="token punctuation">.</span><span class="token procedure-name function">BeginDrawing</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		rl<span class="token punctuation">.</span><span class="token procedure-name function">ClearBackground</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token number">160</span><span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+		cam <span class="token punctuation">:</span><span class="token operator">=</span> rl<span class="token punctuation">.</span>Camera3D <span class="token punctuation">{</span>
+			position   <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">50.0</span><span class="token punctuation">,</span> <span class="token number">50.0</span><span class="token punctuation">,</span> <span class="token number">50.0</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+			target     <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+			up         <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+			fovy       <span class="token operator">=</span> <span class="token number">45</span><span class="token punctuation">,</span>
+			projection <span class="token operator">=</span> <span class="token punctuation">.</span>PERSPECTIVE<span class="token punctuation">,</span>
+		<span class="token punctuation">}</span>
+		rl<span class="token punctuation">.</span><span class="token procedure-name function">BeginMode3D</span><span class="token punctuation">(</span>cam<span class="token punctuation">)</span>
+		t <span class="token punctuation">:</span><span class="token operator">=</span> <span class="token procedure-name function">f32</span><span class="token punctuation">(</span>rl<span class="token punctuation">.</span><span class="token procedure-name function">GetTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+		rot <span class="token punctuation">:</span><span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span>f32 <span class="token punctuation">{</span>
+			la<span class="token punctuation">.</span><span class="token procedure-name function">tan</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">*</span> la<span class="token punctuation">.</span><span class="token procedure-name function">sin</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">1</span><span class="token punctuation">,</span>
+			la<span class="token punctuation">.</span><span class="token procedure-name function">tan</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">*</span> la<span class="token punctuation">.</span><span class="token procedure-name function">sin</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">1</span><span class="token punctuation">,</span>
+			la<span class="token punctuation">.</span><span class="token procedure-name function">tan</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">*</span> la<span class="token punctuation">.</span><span class="token procedure-name function">sin</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">1</span><span class="token punctuation">,</span>
+		<span class="token punctuation">}</span> <span class="token comment">// Used this rotation because it's very "visual"</span>
+
+		translation <span class="token punctuation">:</span><span class="token operator">=</span> rl<span class="token punctuation">.</span><span class="token procedure-name function">MatrixTranslate</span><span class="token punctuation">(</span>maxwell_pos<span class="token punctuation">.</span>x<span class="token punctuation">,</span> maxwell_pos<span class="token punctuation">.</span>y<span class="token punctuation">,</span> maxwell_pos<span class="token punctuation">.</span>z<span class="token punctuation">)</span>
+		rotation <span class="token punctuation">:</span><span class="token operator">=</span> rl<span class="token punctuation">.</span><span class="token procedure-name function">MatrixRotateXYZ</span><span class="token punctuation">(</span><span class="token punctuation">{</span>rot<span class="token punctuation">.</span>x<span class="token punctuation">,</span> rot<span class="token punctuation">.</span>y<span class="token punctuation">,</span> rot<span class="token punctuation">.</span>z<span class="token punctuation">}</span><span class="token punctuation">)</span>
+		scale <span class="token punctuation">:</span><span class="token operator">=</span> rl<span class="token punctuation">.</span><span class="token procedure-name function">MatrixScale</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+		maxwell_model<span class="token punctuation">.</span>transform <span class="token operator">=</span> translation <span class="token operator">*</span> rotation <span class="token operator">*</span> scale
+
+		rl<span class="token punctuation">.</span><span class="token procedure-name function">DrawModel</span><span class="token punctuation">(</span>
+			maxwell_model<span class="token punctuation">,</span>
+			<span class="token punctuation">{</span>maxwell_pos<span class="token punctuation">.</span>x<span class="token punctuation">,</span> maxwell_pos<span class="token punctuation">.</span>y<span class="token punctuation">,</span> maxwell_pos<span class="token punctuation">.</span>z<span class="token punctuation">}</span><span class="token punctuation">,</span>
+			<span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token comment">// Scale</span>
+			rl<span class="token punctuation">.</span>WHITE<span class="token punctuation">,</span> <span class="token comment">// Tint (Just set it white and the texture looks fine)</span>
+		<span class="token punctuation">)</span>
+		rl<span class="token punctuation">.</span><span class="token procedure-name function">DrawGrid</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">10.0</span><span class="token punctuation">)</span>
+		rl<span class="token punctuation">.</span><span class="token procedure-name function">EndMode3D</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		rl<span class="token punctuation">.</span><span class="token procedure-name function">EndDrawing</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		<span class="token procedure-name function">free_all</span><span class="token punctuation">(</span><span class="token keyword">context</span><span class="token punctuation">.</span>temp_allocator<span class="token punctuation">)</span>
+	<span class="token punctuation">}</span>
+
+	rl<span class="token punctuation">.</span><span class="token procedure-name function">CloseWindow</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<h4><a href="https://sketchfab.com/3d-models/maxwell-the-cat-dingus-2ca7f3c1957847d6a145fc35de9046b0">Model Link</a></h4>
+
+		</main>
+		<footer>
+		    <a href="/" alt="Link to Home"><- Return Home</a>
+		</footer>
+	</div>
+</body>
+
+</html>

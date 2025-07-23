@@ -1,0 +1,150 @@
+code[class*="language-"],
+pre[class*="language-"] {
+    font-size: 9.5pt;
+    line-height: 1.375;
+    direction: ltr;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+    background: rgb(16, 15, 15);
+    color: rgb(206, 205, 195);
+}
+
+pre > code[class*="language-"] {
+    font-size: 1em;
+}
+
+pre[class*="language-"]::-moz-selection,
+pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection,
+code[class*="language-"] ::-moz-selection {
+    text-shadow: none;
+    background: rgb(58, 169, 159);
+}
+
+pre[class*="language-"]::selection,
+pre[class*="language-"] ::selection,
+code[class*="language-"]::selection,
+code[class*="language-"] ::selection {
+    text-shadow: none;
+    background: rgb(58, 169, 159);
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+    padding: 1em;
+    margin: 0.5em 0;
+    overflow: auto;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+    padding: 0.1em;
+    border-radius: 0.3em;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: rgb(87, 86, 83);
+}
+
+.token.punctuation {
+    color: rgb(135, 133, 128);
+}
+
+.token.namespace {
+    opacity: 0.7;
+}
+
+.token.operator,
+.token.boolean,
+.token.number {
+    color: rgb(139, 126, 200);
+}
+
+.token.property {
+    color: rgb(218, 112, 44);
+}
+
+.token.tag {
+    color: rgb(206, 93, 151);
+}
+
+.token.string {
+    color: rgb(58, 169, 159);
+}
+
+.token.selector {
+    color: rgb(139, 126, 200);
+}
+
+.token.attr-name {
+    color: rgb(67, 133, 190);
+}
+
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+    color: rgb(58, 169, 159);
+}
+
+.token.attr-value,
+.token.keyword,
+.token.control,
+.token.directive,
+.token.unit {
+    color: rgb(209, 77, 65);
+}
+
+.token.statement,
+.token.regex,
+.token.atrule {
+    color: rgb(58, 169, 159);
+}
+
+.token.placeholder,
+.token.variable {
+    color: rgb(67, 133, 190);
+}
+
+.token.deleted {
+    text-decoration: line-through;
+}
+
+.token.inserted {
+    border-bottom: 1px dotted #202746;
+    text-decoration: none;
+}
+
+.token.italic {
+    font-style: italic;
+}
+
+.token.important,
+.token.bold {
+    font-weight: bold;
+}
+
+.token.important {
+    color: #c94922;
+}
+
+.token.entity {
+    cursor: help;
+}
+
+pre > code.highlight {
+    outline: 0.4em solid #c94922;
+    outline-offset: 0.4em;
+}

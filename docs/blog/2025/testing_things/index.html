@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Home / {{ title }}</title>
+	<title>Blog / </title>
 	<link rel="stylesheet" href="/bundle.css">
 	<link rel="icon" href="/favicon.ico">
 </head>
@@ -37,21 +37,19 @@
 			&ensp;&ensp;&ensp;▓█████▓███ <span class="primary-highlightable">⚘ </span><br>
 		</a>
 	</div>
-	<div id="content">
+	<div id="content" class="blog">
 		<header>
-			<h1>Home / {{ title }}</h1>
+			<h1>Blog / </h1>
+			<h4>July 23, 2025 • 2 minute read</h4>
 		</header>
 		<main>
-			{{ content | safe }}
-			<h3>My Blog</h3>
-			{%- for post in collections.post | sort(attribute='date') | reverse -%}
-			<a href="{{ post.url }}">{{ post.data.title }}</a><span class="date-text"> • {{ post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}</span><br>
-			{%- endfor -%}
-			<br><br>
-			<h3>Contact Me</h3>
-			<a href="https://x.com/Invent_Boss">Twitter</a> •
-			<a href="https://github.com/InventBoss">Github</a>
+			<p>I've been bu</p>
+<p><img src="/assets/maxwell_spin_2025_7_23.gif" alt="Maxwell spinning like the goober he is"></p>
+
 		</main>
+		<footer>
+		    <a href="/" alt="Link to Home"><- Return Home</a>
+		</footer>
 	</div>
 </body>
 
