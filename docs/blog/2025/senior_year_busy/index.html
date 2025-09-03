@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Blog / Senior Year has Been Busy</title>
+	<link rel="stylesheet" href="/flexoki_prism.css">
+	<link rel="stylesheet" href="/bundle.css">
+	<link rel="icon" href="/favicon.ico">
+</head>
+
+<body>
+	<div id="banner">
+		<a href="/" alt="Link to Home">
+			<span class="primary-highlightable">░░░░░░░░</span><br>
+			<span class="primary-highlightable">░░░░░░</span>╔═╣<span class="primary-highlightable">░</span>╔═╗<span
+				class="primary-highlightable">░░░░</span><br>
+			<span class="primary-highlightable">&ensp;&ensp;&ensp;&ensp;░░░</span>═╗<span
+				class="primary-highlightable">░</span>ỏ<span class="primary-highlightable">░░░░</span>╠╝<span
+				class="primary-highlightable">░░░░</span>ỏ<span class="primary-highlightable">░</span>╔<span
+				class="primary-highlightable">░░░░░</span><br>
+			<span class="primary-highlightable">░░░░</span>╚<span class="primary-highlightable">░</span>ỏ<span
+				class="primary-highlightable">░░</span>╠═╦╗ỏ<span class="primary-highlightable">░</span>║<span
+				class="primary-highlightable">░░</span>╔═╩═╣<span class="primary-highlightable">░</span>ỏ<span
+				class="primary-highlightable">░░</span>╦═<span class="primary-highlightable">░&ensp;</span><br>
+			<span class="primary-highlightable">&ensp;&ensp;&ensp;&ensp;░</span>ỏ<span
+				class="primary-highlightable">░░</span>╚═╩╦╝<span class="primary-highlightable">░░</span>╚═╦█▓═╝<span
+				class="primary-highlightable">░</span>ỏ<span class="primary-highlightable">░</span>╚═╦═╝<span
+				class="primary-highlightable">░</span>ỏ<span class="primary-highlightable">░░░</span><br>
+			<span class="primary-highlightable">&ensp;&ensp;&ensp;&ensp;&ensp;░░</span>ỏ<span class="primary-highlightable">░░░░</span>ỏ<span
+				class="primary-highlightable">░</span>&ensp; █▓ &ensp;&ensp;&ensp;&ensp;<span class="primary-highlightable">░░</span>ỏ<span
+				class="primary-highlightable">░░░░░&ensp;</span><br>
+			&ensp;&ensp;&ensp;&ensp;&ensp;▓██ <span class="primary-highlightable">░░</span><br>
+			&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;█▓██═╩<span class="primary-highlightable">░░</span><br>
+			&ensp;&ensp;██▓█<br>
+			<span class="primary-highlightable">⚘ </span>█▓█████&ensp;&ensp;<br>
+			&ensp;&ensp;&ensp;▓█████▓███ <span class="primary-highlightable">⚘ </span><br>
+		</a>
+	</div>
+	<div id="content" class="blog">
+		<header>
+			<h1>Blog / Senior Year has Been Busy</h1>
+			<h4>September 3, 2025 • 3 minute read</h4>
+		</header>
+		<main>
+			<p>I've been gone a while eh? Unfortunately, there hasn't been much development on my game, or anything really relating to my hobby. Senior year has kept me busy, forcing me to mainly focus on that. But there isn't a lack of development, just not a ton to show. I won't be showing much source code, but what have I been doing?</p>
+<h3>The Game</h3>
+<p>I've done a bit of work on various skills I'll need to learn. First, I added a posterization fragment shader to make everything look a <em>little</em> bit worse :)</p>
+<p><img src="/assets/evil_maxwell_spin_2025_9_3.gif" alt="Maxwell still spinning, but all the colors have been reduced to the point where it's mostly red."></p>
+<p>Next, I added a first person camera. Simple in principle, but raylib's custom camera doesn't have parameters for rotation along multiple axes, only a target parameter for the camera to face. So, I had to use this mess of math to get it to work:</p>
+<pre class="language-odin"><code class="language-odin">camera_theta <span class="token operator">-=</span> <span class="token procedure-name function">f32</span><span class="token punctuation">(</span>rl<span class="token punctuation">.</span><span class="token procedure-name function">GetMouseDelta</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>x<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0.006</span>
+camera_phi <span class="token operator">-=</span> <span class="token procedure-name function">f32</span><span class="token punctuation">(</span>rl<span class="token punctuation">.</span><span class="token procedure-name function">GetMouseDelta</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>y<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0.006</span>
+
+<span class="token comment">// Make sure the camera doesn't loop around by preventing</span>
+<span class="token comment">// looking up past a certain amount.</span>
+camera_phi <span class="token operator">=</span> la<span class="token punctuation">.</span><span class="token procedure-name function">clamp</span><span class="token punctuation">(</span>camera_phi<span class="token punctuation">,</span> <span class="token operator">-</span>max_phi<span class="token punctuation">,</span> max_phi<span class="token punctuation">)</span>
+
+camera<span class="token punctuation">.</span>target<span class="token punctuation">.</span>x <span class="token operator">=</span> player<span class="token punctuation">.</span>pos<span class="token punctuation">.</span>x <span class="token operator">+</span> <span class="token punctuation">(</span>la<span class="token punctuation">.</span><span class="token procedure-name function">cos</span><span class="token punctuation">(</span>camera_phi<span class="token punctuation">)</span> <span class="token operator">*</span> la<span class="token punctuation">.</span><span class="token procedure-name function">sin</span><span class="token punctuation">(</span>camera_theta<span class="token punctuation">)</span><span class="token punctuation">)</span>
+camera<span class="token punctuation">.</span>target<span class="token punctuation">.</span>z <span class="token operator">=</span> player<span class="token punctuation">.</span>pos<span class="token punctuation">.</span>z <span class="token operator">+</span> <span class="token punctuation">(</span>la<span class="token punctuation">.</span><span class="token procedure-name function">cos</span><span class="token punctuation">(</span>camera_phi<span class="token punctuation">)</span> <span class="token operator">*</span> la<span class="token punctuation">.</span><span class="token procedure-name function">cos</span><span class="token punctuation">(</span>camera_theta<span class="token punctuation">)</span><span class="token punctuation">)</span>
+camera<span class="token punctuation">.</span>target<span class="token punctuation">.</span>y <span class="token operator">=</span> player<span class="token punctuation">.</span>pos<span class="token punctuation">.</span>y <span class="token operator">+</span> <span class="token punctuation">(</span>la<span class="token punctuation">.</span><span class="token procedure-name function">sin</span><span class="token punctuation">(</span>camera_phi<span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<p>This worked well, and I got a working camera controller! The movement keys don't line up with the direction the camera is facing, but that's future work.</p>
+<p><img src="/assets/fps_maxwell_spin_2025_9_3.gif" alt="First person view of Maxwell spinning."></p>
+<p>And that's all the work I've done with the game, but this is not my only passion in life. I also have the homelab!</p>
+<h3>The Homelab</h3>
+<p>I haven't talked about my homelab whatsoever on this site, but what better time to talk about it than when my game has made little progress!</p>
+<p>My homelab is a small, reused <a href="https://frame.work/products/mainboard-12th-gen-intel-core?v=FRANGACP06">Framework 13 motherboard</a>, but it originally just had a 1TB ssd for storage. Nothing else. This was definitely not going to work in the long term, considering that I run an <a href="https://immich.app/">Immich</a> instance for all my videos and photos I take, and a <a href="https://syncthing.net/">Syncthing</a> instance to share all my music files between my devices, amongst other services. Luckily, the solution for this problem is pretty simple: <strong>get more storage</strong>.</p>
+<p>Looking at all my solutions, I ended up with a Terramaster dual bay enclosure, as it had hardware RAID and a good price, and 2 Ironwolf Pro 14TB drives, as they were a decent price for the storage.</p>
+<p><img src="/assets/enclosure_2025_9_3.jpg" alt="Image of the enclosure with the drives sticking out"></p>
+<p>Running these drives in RAID 1 for parity, I now had all the storage that I'll need to worry about for the foreseeable future!</p>
+<p>Other than that, my school now bans phones, but I still want to receive notifications, so I'm planning on using a flipper zero with a wifi developer board and a custom app to fetch whatever notifications or events I'll need to look at. I'll try my best to work on the game, as the point of this site was to motivate myself, but school has been taking up a lot of time and I can't make promises :(</p>
+<p>Thanks for reading! Not deep technical dive into any game development or anything, but I hope you enjoyed it.</p>
+
+		</main>
+		<footer>
+		    <a href="/" alt="Link to Home"><- Return Home</a>
+		</footer>
+	</div>
+</body>
+
+</html>
