@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Blog / UIs, Tilting, and Cubes Oh My!</title>
+	<link rel="stylesheet" href="/flexoki_prism.css">
+	<link rel="stylesheet" href="/bundle.css">
+	<link rel="icon" href="/favicon.ico">
+</head>
+
+<body>
+	<div id="banner">
+		<a href="/" alt="Link to Home">
+			<span class="primary-highlightable">░░░░░░░░</span><br>
+			<span class="primary-highlightable">░░░░░░</span>╔═╣<span class="primary-highlightable">░</span>╔═╗<span
+				class="primary-highlightable">░░░░</span><br>
+			<span class="primary-highlightable">&ensp;&ensp;&ensp;&ensp;░░░</span>═╗<span
+				class="primary-highlightable">░</span>ỏ<span class="primary-highlightable">░░░░</span>╠╝<span
+				class="primary-highlightable">░░░░</span>ỏ<span class="primary-highlightable">░</span>╔<span
+				class="primary-highlightable">░░░░░</span><br>
+			<span class="primary-highlightable">░░░░</span>╚<span class="primary-highlightable">░</span>ỏ<span
+				class="primary-highlightable">░░</span>╠═╦╗ỏ<span class="primary-highlightable">░</span>║<span
+				class="primary-highlightable">░░</span>╔═╩═╣<span class="primary-highlightable">░</span>ỏ<span
+				class="primary-highlightable">░░</span>╦═<span class="primary-highlightable">░&ensp;</span><br>
+			<span class="primary-highlightable">&ensp;&ensp;&ensp;&ensp;░</span>ỏ<span
+				class="primary-highlightable">░░</span>╚═╩╦╝<span class="primary-highlightable">░░</span>╚═╦█▓═╝<span
+				class="primary-highlightable">░</span>ỏ<span class="primary-highlightable">░</span>╚═╦═╝<span
+				class="primary-highlightable">░</span>ỏ<span class="primary-highlightable">░░░</span><br>
+			<span class="primary-highlightable">&ensp;&ensp;&ensp;&ensp;&ensp;░░</span>ỏ<span class="primary-highlightable">░░░░</span>ỏ<span
+				class="primary-highlightable">░</span>&ensp; █▓ &ensp;&ensp;&ensp;&ensp;<span class="primary-highlightable">░░</span>ỏ<span
+				class="primary-highlightable">░░░░░&ensp;</span><br>
+			&ensp;&ensp;&ensp;&ensp;&ensp;▓██ <span class="primary-highlightable">░░</span><br>
+			&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;█▓██═╩<span class="primary-highlightable">░░</span><br>
+			&ensp;&ensp;██▓█<br>
+			<span class="primary-highlightable">⚘ </span>█▓█████&ensp;&ensp;<br>
+			&ensp;&ensp;&ensp;▓█████▓███ <span class="primary-highlightable">⚘ </span><br>
+		</a>
+	</div>
+	<div id="content" class="blog">
+		<header>
+			<h1>Blog / UIs, Tilting, and Cubes Oh My!</h1>
+			<h4>June 24, 2026 • 2 minute read</h4>
+		</header>
+		<main>
+			<p>It's been QUITE a while. But now, I've been out of school for a couple of weeks, had a chance to relax (play Kerbal Space Program, Forza Horizon 6, etc), and gotten a few things done with the game.</p>
+<p>So, what have I done so far? First, I managed to add a skybox. It took far too long because I was using the wrong shader from Raylib's example, but I've finally gotten it implemented. <a href="https://www.raylib.com/examples/models/loader.html?name=models_skybox_rendering">Here's the link</a> to the example used, although it's in C and not Odin, and there is a bunch of code relating to making an HDR cubemap which is completely unnecessary.</p>
+<p><img src="/assets/skybox_demo_2026_7_24.gif" alt="Similar to the previous scenes of Maxwell spinning, but with a beautiful sunset for a skybox."></p>
+<p>Another feature I've added is a small, Quake-like, camera tilt effect when moving side-to-side. For what I hope this game will become, it's a strange feature to add, but it gives a lot more life to the camera controller and feels great to use.</p>
+<p><img src="/assets/tilting_demo_2026_7_24.gif" alt="Beautiful Quake-esque tilting of the camera as the player moves side-to-side."></p>
+<p>Finally, I've replaced the simple FPS counter in the corner with a full debug menu and better keybinds for controlling different options e.g. toggling fullscreen, adjusting acceleration and max speed values, and even changing shader values. Right now UI positions are hardcoded and the font size is only really appropriate for my screen DPI, but it looks great and provides a good proof-of-concept.</p>
+<p><img src="/assets/debug_menu_first_look_2026_7_24.png" alt="A nice looking debug menu that has fullscreen and shader toggles, player max speed, acceleration, and deceleration values, shader adjustment options, and basic stats like window dimension and fps."></p>
+<p>Those are all the cool features I've been working on, but tomorrow another post should come out. For a long time, I've been thinking about what this game could look like. I have the nice shaders, the decent movement, and the ability to load 3D models, but game features alone do not make a full game. Tomorrow, I'll talk about what I hope to achieve for this game and reveal another feature I've been working on that some of the debug menu sliders control.</p>
+<p><em>Peek at a Feature I'm working on.</em></p>
+<p><img src="/assets/pixel_shader_sunset_2026_7_24.png" alt="A dithered, pixelated sunset of the cubemap previously mentioned."></p>
+
+		</main>
+		<footer>
+		    <a href="/" alt="Link to Home"><- Return Home</a>
+		</footer>
+	</div>
+</body>
+
+</html>
